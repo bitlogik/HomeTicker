@@ -28,7 +28,7 @@ myticker.device.write(">\x9f")
 raw_input("PRESS ENTER to continue")
 
 myticker.clear_screen()
-# CodePage 939, "Shifted-JIS"
+# CodePage 932, "Shifted-JIS"
 # requires half-width hankaku katakana (半角片仮名)
 myticker.set_charset("cp932")
 myticker.write(u"ｺｿﾆﾁﾜ ﾊﾞｶ")

@@ -78,33 +78,54 @@ class HomeTicker:
         if chrset == "cp437": # Code Page 437, ASCII
             self.chrset = chrset
             chrsetcode = 0
-        if chrset == "cp932": #Code Page 932, Microsoft Japanese shift-JIS
+        if chrset == "cp932": # Code Page 932, Microsoft Japanese shift-JIS
             self.chrset = chrset
             chrsetcode = 1
         if chrset == "cp850": # Code Page 850, Generic Western Europe
             self.chrset = chrset
             chrsetcode = 2
-        if chrset == "cp860":# Code Page 860, Portuguese
+        if chrset == "cp860": # Code Page 860, Portuguese
             self.chrset = chrset
             chrsetcode = 3
-        if chrset == "cp863":# Code Page 863, French Canadian
+        if chrset == "cp863": # Code Page 863, French Canadian
             self.chrset = chrset
             chrsetcode = 4
-        if chrset == "cp865":# Code Page 865, Scandinavia
+        if chrset == "cp865": # Code Page 865, Scandinavia
             self.chrset = chrset
             chrsetcode = 5
-        if chrset == "cp852":# Code Page 852, Eastern Europe
+        if chrset == "cp852": # Code Page 852, Eastern Europe
             self.chrset = chrset
             chrsetcode = 6
-        if chrset == "cp866":# Code Page 866, Russian
+        if chrset == "cp866": # Code Page 866, Russian
             self.chrset = chrset
             chrsetcode = 7
-        if chrset == "cp858":# Code Page 858, Western Europe
+        if chrset == "cp858": # Code Page 858, Western Europe
             self.chrset = chrset
             chrsetcode = 8
-        if chrset == "cp1252":# Code Page w1252,Latin1 Europe
+        if chrset == "cp1252": # Code Page w1252, Latin1 Europe
             self.chrset = chrset
             chrsetcode = 9
+        if chrset == "cp1250": # Code Page w1250, Central Europe
+            self.chrset = chrset
+            chrsetcode = 14
+        if chrset == "cp1251": # Code Page w1251, Cyrillic
+            self.chrset = chrset
+            chrsetcode = 15
+        if chrset == "cp864": # Code Page 864, Arabic
+            self.chrset = chrset
+            chrsetcode = 27
+        if chrset == "cp775": # Code Page 775, Baltic
+            self.chrset = chrset
+            chrsetcode = 28
+        if chrset == "cp737": # Code Page 737, Greek
+            self.chrset = chrset
+            chrsetcode = 29
+        if chrset == "cp1253": # Code Page w1253, Greek
+            self.chrset = chrset
+            chrsetcode = 30
+        if chrset == "cp1254": # Code Page w1254, Turkish
+            self.chrset = chrset
+            chrsetcode = 31
         self.send_buffer([27, 116, chrsetcode])
         time.sleep(0.6)
     
