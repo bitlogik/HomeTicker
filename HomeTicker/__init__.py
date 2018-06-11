@@ -43,10 +43,11 @@ class HomeTicker:
         self.set_charset("")
     
     def __del__(self):
-        time.sleep(0.2)
-        self.device.flush()
-        time.sleep(0.2)
-        self.device.close()
+        if hasattr('self', 'device'):
+            time.sleep(0.2)
+            self.device.flush()
+            time.sleep(0.2)
+            self.device.close()
     
     def close(self):
         if self.clearclose:
