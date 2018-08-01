@@ -52,6 +52,10 @@ class HomeTicker:
     def close(self):
         if self.clearclose:
             self.clear_screen()
+        time.sleep(0.2)
+        self.device.flush()
+        time.sleep(0.2)
+        self.device.close()
         del self
     
     def send_buffer(self, buffer):
