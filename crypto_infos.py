@@ -17,13 +17,13 @@
 
 import time
 import HomeTicker
-from api.getRestJSON import * 
+import RESTapi
 
 myticker = HomeTicker.HomeTicker()
-pricebtc_api = getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
-priceeth_api = getRestJSON("https://poloniex.com/public",{"command":"returnTicker"})
-statsblkapi = getRestJSON("https://etherchain.org/api/blocks/count")
-latestblock = getRestJSON('https://chain.api.btc.com/v3/block/latest')
+pricebtc_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
+priceeth_api = RESTapi.getRestJSON("https://poloniex.com/public",{"command":"returnTicker"})
+statsblkapi = RESTapi.getRestJSON("https://etherchain.org/api/blocks/count")
+latestblock = RESTapi.getRestJSON('https://chain.api.btc.com/v3/block/latest')
 myticker.set_brightness(4)
 print "PRESS CTRL+C TO QUIT"
 

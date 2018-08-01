@@ -6,13 +6,13 @@ import urllib
 import urllib2
 
 class getRestJSON:
-    def __init__(self,url="",params=""):
-        self.url=url
-        self.params=dict(params)
-        self.jsres=[]
+    def __init__(self , url = "" , params = "" ):
+        self.url = url
+        self.params = dict(params)
+        self.jsres = []
     
     def setURL(self,url):
-        self.url=url
+        self.url = url
     
     def addParam(self,param):
         self.params.update(param)
@@ -22,7 +22,7 @@ class getRestJSON:
         try:
             req = urllib2.Request(self.url+"?"+params_enc, headers={ 'User-Agent': 'Mozilla/5.0' })
             self.webrsc = urllib2.urlopen(req)
-            self.jsres=json.load(self.webrsc)
+            self.jsres = json.load(self.webrsc)
         except:
             raise IOError("Error while processing request:\n%s"%(self.url+"?"+params_enc))
     
@@ -32,7 +32,7 @@ class getRestJSON:
         for key in path:
             if key.isdigit(): key=int(key)
             try:
-                out=out[key]
+                out = out[key]
             except:
                 raise KeyError("Key Error. Did you get data?")
         return out

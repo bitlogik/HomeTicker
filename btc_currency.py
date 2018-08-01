@@ -21,12 +21,12 @@
 currency = "EUR"
 
 import time
-import api.getRestJSON
+import RESTapi
 import HomeTicker
 
 myticker = HomeTicker.HomeTicker()
-price_api = api.getRestJSON.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
-RateApi = api.getRestJSON.getRestJSON(
+price_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
+RateApi = RESTapi.getRestJSON(
                 'https://openexchangerates.org/api/latest.json',
                 {"app_id":"2af667e95c984a1a8c1cb635c1eb6aab"}
             )

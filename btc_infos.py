@@ -16,13 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import time
-import api.getRestJSON
+import RESTapi
 import HomeTicker
 
 print "PRESS CTRL+C TO QUIT"
 myticker = HomeTicker.HomeTicker()
-price_api = api.getRestJSON.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
-latestblock = api.getRestJSON.getRestJSON('https://chain.api.btc.com/v3/block/latest')
+price_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
+latestblock = RESTapi.getRestJSON('https://chain.api.btc.com/v3/block/latest')
 
 def printprice(curr):
     price_api.getData()

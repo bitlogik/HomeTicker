@@ -20,12 +20,12 @@ state_code = "fr"
 metric_units = True
 
 
-import api.getRestJSON
+import RESTapi
 import HomeTicker
 
 myticker = HomeTicker.HomeTicker(False)
 
-mydata = api.getRestJSON.getRestJSON()
+mydata = RESTapi.getRestJSON()
 
 query = "select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s, %s\")" % (city, state_code)
 if metric_units:
