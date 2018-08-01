@@ -80,6 +80,8 @@ while True:
     except KeyboardInterrupt:
         break
     except:
+        print "Issue detected, check Internet and the HomeTicker USB"
+        print "Press CTRL+C to abort"
         time.sleep(5)
 myticker.close()
 

@@ -45,7 +45,7 @@ try:
             "1 BTC = %.0f %s  " %
             ( btc_price_cur , currency )
         )
-        time.sleep(60)
+        time.sleep(30)
 except KeyboardInterrupt:
     pass
 myticker.close()

@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 # Example for HomeTicker
-# Basic example that displays 'hello world'
+# Example about international code page
 # Copyright (C) 2018  BitLogiK
 
 # This program is free software: you can redistribute it and/or modify

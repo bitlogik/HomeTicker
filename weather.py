@@ -36,10 +36,10 @@ else:
 
 mydata.setURL("https://query.yahooapis.com/v1/public/yql")
 mydata.addParam({ "q":query, "format":"json" })
-print "WAIT FOR DATA READING...",
+print "WAIT FOR DATA READING..."
 mydata.getData()
 
-weather = mydata.getKey("query/results/channel/item/condition/text").lower()
+weather = mydata.getKey("query/results/channel/item/condition/text")
 pres_temp = int(mydata.getKey("query/results/channel/item/condition/temp"))
 # can also use :
 # query/results/channel/units pressure speed temperature
@@ -50,6 +50,6 @@ pres_temp = int(mydata.getKey("query/results/channel/item/condition/temp"))
 myticker.write(u"%s weather :" % city )
 myticker.pos_cursor(2,1)
 myticker.clear_line()
-myticker.write(u"%i°%s  %s" % ( pres_temp, temp_unit, weather ) )
-
+myticker.write(u"%i°%s  %s" % ( pres_temp, temp_unit, weather.lower() ) )
+print "DONE"
 myticker.close()

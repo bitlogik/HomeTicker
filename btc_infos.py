@@ -33,17 +33,21 @@ def printprice(curr):
     time.sleep(10)
     myticker.clear_screen()
     height = latestblock.getKey("data/height")
-    myticker.write("Height: %s"%height)
+    myticker.write("Height:  %s"%height)
     myticker.pos_cursor(2,1)
     diff = int(latestblock.getKey("data/difficulty"))
     myticker.write("Diff  :  %i G"% (diff/10**9) )
 
-try:
-    while True:
+while True:
+    try:
         printprice("USD")
         time.sleep(5)
         printprice("EUR")
         time.sleep(5)
-except KeyboardInterrupt:
-    pass
+    except KeyboardInterrupt:
+        break
+    except:
+        print "Issue detected, check Internet and the HomeTicker USB"
+        print "Press CTRL+C to abort"
+        time.sleep(5)
 myticker.close()
