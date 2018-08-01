@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python2.7
 # -*- coding: utf8 -*-
 
 # Example for HomeTicker
