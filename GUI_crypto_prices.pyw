@@ -82,6 +82,10 @@ else:
     with open(CoinListDBFileName, 'w') as f:
         pickle.dump([coin_list_keyrank, coin_list_keyname, coin_list_keysymbol], f)
 
+# Return name uppercase to sort the right way
+def toUpper(item):
+    return item.upper()
+
 # Generate coin list according to sorting option
 def gosort(*args):
     global coin_list_sorted
@@ -89,7 +93,7 @@ def gosort(*args):
     if sort_option == "SortOrder":
         coin_list_sorted = sorted(coin_list_keyrank)
     if sort_option == "CoinName":
-        coin_list_sorted = sorted(coin_list_keyname)
+        coin_list_sorted = sorted(coin_list_keyname, key=toUpper)
     if sort_option == "Symbol":
         coin_list_sorted = sorted(coin_list_keysymbol)
     option.delete(0, Tkinter.END)
