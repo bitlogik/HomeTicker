@@ -182,6 +182,12 @@ class HomeTicker:
         buffer = [36, col, line]
         self.send_ctrl_seq( buffer )
     
+    def start_blink(self):
+        self.send_ctrl_seq([69,14])
+    
+    def stop_blink(self):
+        self.send_ctrl_seq([69, 0])
+    
     def write(self, msg):
         msge = msg.encode(self.chrset)
         while msge:
