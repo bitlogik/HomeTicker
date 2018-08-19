@@ -116,6 +116,9 @@ class HomeTicker:
         if chrset == "cp1251": # Code Page w1251, Cyrillic
             self.chrset = chrset
             chrsetcode = 15
+        if chrset == "cp1006": # Code Page 1006, Urdu ISO 8 bits Iran System
+            self.chrset = chrset
+            chrsetcode = 20
         if chrset == "cp864": # Code Page 864, Arabic
             self.chrset = chrset
             chrsetcode = 27
