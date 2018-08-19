@@ -166,7 +166,7 @@ class HomeTicker:
     
     def move_cursor_rightend(self):
         self.send_ctrl_seq( [13] )
-
+    
     def move_cursor_home(self):
         self.send_buffer( [11] )
     
