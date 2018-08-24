@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/pythonw2.7
 # -*- coding: utf8 -*-
 
 # GUI example for HomeTicker display
