@@ -16,8 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
-# See the currency list using currency codes
-# at https://openexchangerates.org/api/currencies.json
+# See the currency string according to ISO4217
 currency = "EUR"
 
 import time
@@ -25,24 +24,21 @@ import RESTapi
 import HomeTicker
 
 myticker = HomeTicker.HomeTicker()
-price_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
-RateApi = RESTapi.getRestJSON(
-                'https://openexchangerates.org/api/latest.json',
-                {"app_id":"2af667e95c984a1a8c1cb635c1eb6aab"}
-            )
+price_api = RESTapi.getRestJSON('https://min-api.cryptocompare.com/data/price')
+price_api.addParam( { "extraParams": "HomeTicker display",
+                "fsym":"BTC", "tsyms": currency} )
 
 print "PRESS CTRL+C TO QUIT"
 myticker.write("Bitcoin Price")
+myticker.set_mode(3)
 try:
     while True:
         price_api.getData()
-        btc_price = float( price_api.getKey("bpi/USD/rate").replace(",", "") )
-        RateApi.getData()
-        currency_price = RateApi.getKey("rates/"+currency)
-        btc_price_cur = btc_price * currency_price
+        btc_price_cur = price_api.getKey( currency )
         myticker.pos_cursor(2,3)
+        myticker.clear_line()
         myticker.write(
-            "1 BTC = %.0f %s  " %
+            "1 BTC = %.0f %s" %
             ( btc_price_cur , currency )
         )
         time.sleep(30)
