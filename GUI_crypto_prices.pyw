@@ -219,6 +219,8 @@ def gowatch():
         myhometicker.clear_screen()
         myhometicker.write("Select coins")
         return
+    labelinfo['fg'] = 'black'
+    labelinfo['text'] = "Loading ..."
     display_loop = master.after(200, display_coin_list)
 
 def clear_sel_list():
