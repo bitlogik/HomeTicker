@@ -3,7 +3,7 @@
 
 # GUI example for HomeTicker display
 # GUI to display various crypto-currencies prices
-# Copyright (C) 2018  BitLogiK
+# Copyright (C) 2018-2019  BitLogiK
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -127,6 +127,42 @@ def display_info(name, price, currency):
         print_error( "HomeTicker issue.\nRestart the app" )
         return
 
+def disp_scroll(line1, line2, idxi):
+    global display_loop
+    if idxi != None:
+        try:
+            myhometicker.tickerdisp(line1, line2, idxi)
+        except:
+            print_error( "HomeTicker issue.\nRestart the app" )
+            return
+        display_loop = master.after(225, disp_scroll, line1, line2, next(iterposidx, None))
+    else:
+        display_coin(next(coiniter, None))
+
+def scroll_info(name, price, currency):
+    global iterposidx
+    txtline2 = str(price)+" "+currency
+    lenl1 = len(name)
+    lenl2 = len(txtline2)
+    ltxt = max(lenl1, lenl2)
+    if lenl1 >= lenl2:
+        ldiff = lenl1 - lenl2
+        ladd = ldiff//2
+        line1 = " "*20 + name + " "*20
+        line2 = " "*(ladd+20) + txtline2 + " "*(ladd+ldiff%2+20)
+    else:
+        ldiff = lenl2 - lenl1
+        ladd = ldiff//2
+        line1 = " "*(ladd+20) + name + " "*(ladd+ldiff%2+20)
+        line2 = " "*20 + txtline2 + " "*20
+    iterposidx = iter(xrange(0,ltxt+21))
+    try:
+        myhometicker.move_cursor_home()
+        disp_scroll( line1, line2, next(iterposidx) )
+    except:
+       print_error( "HomeTicker issue.\nRestart the app" )
+       return
+
 def display_coin(coindata):
     global display_loop
     # If end of coin list go to get new data
@@ -138,9 +174,12 @@ def display_coin(coindata):
         try:
             price = coin_api.getKey( coindata["SYMBOL"]+"/"+currency_choice )
         except:
-            price = " -- No data --     "
-        display_info(selname, price, currency_choice)
-        display_loop = master.after(8000, display_coin, next(coiniter, None))
+            price = " -- No data in "
+        if scroll.get():
+            scroll_info(selname, price, currency_choice)
+        else:
+            display_info(selname, price, currency_choice)
+            display_loop = master.after(8000, display_coin, next(coiniter, None))
 
 # Get coins prices and display one by one
 def display_coin_list():
@@ -153,6 +192,7 @@ def display_coin_list():
         coin_api.getData()
     except:
         print_error( "Internet service issue.\nRetrying in 10 sec." )
+        myhometicker.clear_screen()
         display_loop = master.after(10000, display_coin_list)
         return
     print_monitor( " ".join(selsymb) )
@@ -170,7 +210,7 @@ def get_sel_data_list(curselect):
 
 # Get coin data from the selected options
 def gowatch():
-    global selected_coin_data_list
+    global display_loop, selected_coin_data_list
     if display_loop is not None:
         master.after_cancel(display_loop)
     selected_coin_data_list = map(get_sel_data_list, option.curselection() )
@@ -179,7 +219,7 @@ def gowatch():
         myhometicker.clear_screen()
         myhometicker.write("Select coins")
         return
-    display_coin_list()
+    display_loop = master.after(200, display_coin_list)
 
 def clear_sel_list():
     option.selection_clear(0, Tkinter.END)
@@ -238,6 +278,13 @@ labelcurr.pack()
 currency = Tkinter.Entry(rightframe, width=6)
 currency.pack()
 currency.insert(0, "USD")
+labelscroll = Tkinter.Label( rightframe, text="\nScroll display",
+            font='bold' )
+labelscroll.pack()
+scroll = Tkinter.BooleanVar()
+scroll.set(True)
+scrollcb = Tkinter.Checkbutton(rightframe, variable=scroll)
+scrollcb.pack()
 labelspace = Tkinter.Label( rightframe, text="", font=("",28) )
 labelspace.pack()
 button = Tkinter.Button(rightframe, text="Watch", font=("Arial", 16),

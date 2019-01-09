@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 # Python library for HomeTicker
-# Copyright (C) 2018  BitLogiK
+# Copyright (C) 2018-2019  BitLogiK
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -204,6 +204,34 @@ class HomeTicker:
         while times>0:
             for i in range(0,ltxt):
                 self.write(text[i])
+                time.sleep(twait)
+            times -= 1
+        self.device.write([31,self.current_mode])
+    
+    def tickerdisp(self, line1, line2, idx):
+        end = idx + 20
+        self.write( line1[idx:end] + line2[idx:end] )
+    
+    def tickerscroll(self, txtline1, txtline2, times = 1, speed = 3):
+        twait = speed/20.0
+        lenl1 = len(txtline1)
+        lenl2 = len(txtline2)
+        ltxt = max(lenl1, lenl2)
+        if lenl1 >= lenl2:
+            ldiff = lenl1 - lenl2
+            ladd = ldiff//2
+            line2 = " "*(ladd+20) + txtline2 + " "*(ladd+ldiff%2+20)
+            line1 = " "*20 + txtline1 + " "*20
+        else:
+            ldiff = lenl2 - lenl1
+            ladd = ldiff//2
+            line1 = " "*(ladd+20) + txtline1 + " "*(ladd+ldiff%2+20)
+            line2 = " "*20 + txtline2 + " "*20
+        self.device.write([31,1])
+        self.move_cursor_home()
+        while times>0:
+            for i in range(0,ltxt+21):
+                self.tickerdisp(line1, line2, i)
                 time.sleep(twait)
             times -= 1
         self.device.write([31,self.current_mode])
