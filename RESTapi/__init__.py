@@ -23,7 +23,17 @@ class getRestJSON:
             req = urllib2.Request(self.url+"?"+params_enc, headers={ 'User-Agent': 'Mozilla/5.0' })
             self.webrsc = urllib2.urlopen(req)
             self.jsres = json.load(self.webrsc)
-        except:
+        except urllib2.URLError as err:
+            if err.reason[1][:36] == '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE]':
+                print "-"*30
+                print "RESTapi can't connect to the remote server"
+                print "Too old version of OpenSSL in your Python"
+                print "On Mac, install Homebrew, then"
+                print "$ brew install python@2"
+                print " Use : $ python2 xxxx.py"
+                print "-"*30
+            raise IOError("Error while processing request:\n%s"%(self.url+"?"+params_enc))
+        except Exception as err:
             raise IOError("Error while processing request:\n%s"%(self.url+"?"+params_enc))
     
     def getKey(self,keychar):
