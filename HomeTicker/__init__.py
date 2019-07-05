@@ -28,7 +28,7 @@ class HomeTicker:
         if port is None:
             raise IOError("Error finding HomeTicker\nCheck it is connected on this machine")
         try:
-            self.device = serial.Serial(port)
+            self.device = serial.Serial(port, 9600)
         except Exception as err:
             if err[0]==13:
                 raise IOError("Permission Denied\n do 'sudo usermod -a -G dialout $USER' \
@@ -60,6 +60,7 @@ class HomeTicker:
     
     def send_buffer(self, buffer):
         self.device.write(buffer)
+        time.sleep(0.001)
     
     def send_ctrl_seq(self, ctrl_seq):
         self.send_buffer([31]+ctrl_seq)
