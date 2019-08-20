@@ -40,11 +40,13 @@ class YahooStockPrice():
     def update(self):
         self.stocks_api.getData()
         QuoteKeyRoot = "spark/result/0/response/0/indicators/quote/0/close"
-        i = len ( self.stocks_api.getKey(QuoteKeyRoot) ) - 1
-        while self.stocks_api.getKey( QuoteKeyRoot+"/"+str(i) ) == None:
-            i-=1
-        self.latest = float ( self.stocks_api.getKey("spark/result/0/response/0/indicators/quote/0/close/"+str(i)) )
-        #self.latest = float ( self.stocks_api.getKey("spark/result/0/response/0/meta/chartPreviousClose") )
+        try:
+            i = len ( self.stocks_api.getKey(QuoteKeyRoot) ) - 1
+            while self.stocks_api.getKey( QuoteKeyRoot+"/"+str(i) ) == None:
+                i-=1
+            self.latest = float ( self.stocks_api.getKey(QuoteKeyRoot+"/"+str(i)) )
+        except:
+            self.latest = float ( self.stocks_api.getKey("spark/result/0/response/0/meta/chartPreviousClose") )
         self.previous =  float ( self.stocks_api.getKey("spark/result/0/response/0/meta/previousClose") )
         self.currency = self.stocks_api.getKey("spark/result/0/response/0/meta/currency")
         self.variation = self.latest - self.previous
@@ -60,7 +62,9 @@ class YahooStockPrice():
         
     def getname(self, code):
         f = urllib.urlopen("https://finance.yahoo.com/quote/"+code)
-        self.name = f.read(500).split(",")[1]
+        datapage = f.read(500)
+        startstr = datapage.find("content=\"") + 9
+        self.name = datapage[startstr:].split(",")[1]
 
 myhometicker = HomeTicker.HomeTicker()
 myhometicker.write("Loading Wait")
