@@ -1,3 +1,5 @@
 *.pyc
 CoinList.db
+dist
+build
 

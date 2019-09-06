@@ -16,11 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import HomeTicker
+import sys
+
 try:
     import tkMessageBox
 except Exception as err:
     print err
-    quit()
+    sys.exit()
 import Tkinter
 try:
     myhometicker = HomeTicker.HomeTicker()
@@ -28,7 +30,7 @@ try:
 except Exception as error_msg:
     Tkinter.Tk().withdraw()
     tkMessageBox.showerror("HomeTicker Error", error_msg)
-    raise
+    sys.exit()
 
 import urllib
 import json
@@ -41,6 +43,9 @@ if os.name == 'nt':
     import ctypes
     myappid = 'fr.bitlogik.GUIHT.001'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    def resource_path(relative_path):
+        base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        return os.path.join(base_path, relative_path)
 
 # Getting the coin list
 CoinListDBFileName = 'CoinList.db'
@@ -63,7 +68,7 @@ else:
         tkMessageBox.showerror("Internet error",
                     "Can't reach the data server.\nPlease check your connection.\n\n" )
         myhometicker.close()
-        raise
+        sys.exit()
     # Sorting and cleaning the data
     coin_list_keyrank = {}
     coin_list_keyname = {}
@@ -236,7 +241,7 @@ master.resizable(False, False)
 leftframe = Tkinter.Frame(master, padx=30, pady=20)
 leftframe.winfo_toplevel().title("HomeTicker CryptoCurrencies Prices")
 if os.name == 'nt':
-    leftframe.winfo_toplevel().wm_iconbitmap(bitmap='HTicon.ico')
+    leftframe.winfo_toplevel().wm_iconbitmap(bitmap=resource_path('HTicon.ico'))
 else:
     leftframe.winfo_toplevel().wm_iconbitmap(bitmap='@HTicon.xbm')
 leftframe.pack(fill=Tkinter.Y)
