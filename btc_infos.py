@@ -3,7 +3,7 @@
 
 # Example for HomeTicker display
 # Displays Bitcoin price and network info in real-time
-# Copyright (C) 2018  BitLogiK
+# Copyright (C) 2018-2019  BitLogiK
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import HomeTicker
 print "PRESS CTRL+C TO QUIT"
 myticker = HomeTicker.HomeTicker()
 price_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
-latestblock = RESTapi.getRestJSON('https://chain.api.btc.com/v3/block/latest')
+latestblock = RESTapi.getRestJSON('https://api.blockchair.com/bitcoin/stats')
 lntot_api = RESTapi.getRestJSON('https://p2sh.info/api/datasources/proxy/1/query')
 lntot_api.addParam({"db":"p2shinfo","q":'SELECT last("value") FROM "ln_stats" WHERE time > now()-1h GROUP BY time(0h) fill(null)'})
 
@@ -38,7 +38,7 @@ def printprice(curr):
     time.sleep(10)
     myticker.clear_screen()
     myticker.write("Bitcoin Stats")
-    height = latestblock.getKey("data/height")
+    height = latestblock.getKey("data/best_block_height")
     myticker.pos_cursor(2,1)
     myticker.write("Height:  %s"%height)
     time.sleep(5)

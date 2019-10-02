@@ -20,7 +20,10 @@ class getRestJSON:
     def getData(self):
         params_enc = urllib.urlencode( self.params )
         try:
-            req = urllib2.Request(self.url+"?"+params_enc, headers={ 'User-Agent': 'Mozilla/5.0' })
+            if params_enc:
+                req = urllib2.Request(self.url+"?"+params_enc, headers={ 'User-Agent': 'Mozilla/5.0', 'Cache-Control':'max-age=0' })
+            else:
+                req = urllib2.Request(self.url, headers={ 'User-Agent': 'Mozilla/5.0', 'Cache-Control':'max-age=0' })
             self.webrsc = urllib2.urlopen(req)
             self.jsres = json.load(self.webrsc)
         except urllib2.URLError as err:

@@ -3,7 +3,7 @@
 
 # Example for HomeTicker display
 # Displays real-time Bitcoin and Ethereum infos
-# Copyright (C) 2018  BitLogiK
+# Copyright (C) 2018-2019  BitLogiK
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ pricebtc_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice
 priceeth_api = RESTapi.getRestJSON("https://poloniex.com/public",{"command":"returnTicker"})
 statsblkapi = RESTapi.getRestJSON("https://api.etherscan.io/api",
                                   {"module":"proxy","action":"eth_blockNumber"})
-latestblock = RESTapi.getRestJSON('https://chain.api.btc.com/v3/block/latest')
+latestblock = RESTapi.getRestJSON('https://api.blockchair.com/bitcoin/stats')
 myticker.set_brightness(4)
 print "PRESS CTRL+C TO QUIT"
 
@@ -43,7 +43,7 @@ def printbtcprice():
     myticker.pos_cursor(1,1)
     myticker.write(("Bitcoin Stats\r\n1 BTC = %.2f USD") % btc_price)
     time.sleep(3)
-    height = latestblock.getKey("data/height")
+    height = latestblock.getKey("data/best_block_height")
     myticker.pos_cursor(2,1)
     myticker.clear_line()
     myticker.write("Height: %s" % height)
