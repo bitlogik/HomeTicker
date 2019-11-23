@@ -59,24 +59,36 @@ class YahooStockPrice():
         hometicker.write( "%.2f %s" % (self.latest, self.currency) )
         hometicker.pos_cursor(2,16)
         hometicker.write( "%+.0f" % (self.variation) )
-        
+    
     def getname(self, code):
         f = urllib.urlopen("https://finance.yahoo.com/quote/"+code)
         datapage = f.read(500)
         startstr = datapage.find("content=\"") + 9
-        self.name = datapage[startstr:].split(",")[1]
+        self.name = datapage[startstr:].split(",")[1].replace("amp;","").replace("USD","rate")
 
 myhometicker = HomeTicker.HomeTicker()
 myhometicker.write("Loading Wait")
 
 apilist = []
-for stock in stock_code_list:
-    apilist.append(YahooStockPrice(stock))
-try:
-    while True:
+while len(apilist)==0:
+    try:
+        for stock in stock_code_list:
+            apilist.append(YahooStockPrice(stock))
+    except:
+        print "Issue detected, check Internet"
+        print "Retrying in 5 seconds..."
+        print "Press CTRL+C to abort"
+        time.sleep(5)
+while True:
+    try:
         for api in apilist:
             api.HometickerPrint(myhometicker)
             time.sleep(8)
-except KeyboardInterrupt:
-    pass
+    except KeyboardInterrupt:
+        break
+    except:
+        print "Issue detected, check Internet and the HomeTicker USB"
+        print "Retrying in 5 seconds..."
+        print "Press CTRL+C to abort"
+        time.sleep(5)
 myhometicker.close()

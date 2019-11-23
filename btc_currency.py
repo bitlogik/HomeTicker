@@ -31,8 +31,8 @@ price_api.addParam( { "extraParams": "HomeTicker display",
 print "PRESS CTRL+C TO QUIT"
 myticker.write("Bitcoin Price")
 myticker.set_mode(3)
-try:
-    while True:
+while True:
+    try:
         price_api.getData()
         btc_price_cur = price_api.getKey( currency )
         myticker.pos_cursor(2,3)
@@ -42,6 +42,11 @@ try:
             ( btc_price_cur , currency )
         )
         time.sleep(30)
-except KeyboardInterrupt:
-    pass
+    except KeyboardInterrupt:
+        break
+    except:
+        print "Issue detected, check Internet and the HomeTicker USB"
+        print "Retrying in 5 seconds..."
+        print "Press CTRL+C to abort"
+        time.sleep(5)
 myticker.close()
