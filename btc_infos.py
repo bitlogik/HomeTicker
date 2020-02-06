@@ -25,7 +25,7 @@ print "PRESS CTRL+C TO QUIT"
 myticker = HomeTicker.HomeTicker()
 price_api = RESTapi.getRestJSON('https://api.coindesk.com/v1/bpi/currentprice.json')
 latestblock = RESTapi.getRestJSON('https://api.blockchair.com/bitcoin/stats')
-lntot_api = RESTapi.getRestJSON('https://p2sh.info/api/datasources/proxy/1/query')
+lntot_api = RESTapi.getRestJSON('https://txstats.com/api/datasources/proxy/1/query')
 lntot_api.addParam({"db":"p2shinfo","q":'SELECT last("value") FROM "ln_stats" WHERE time > now()-1h GROUP BY time(0h) fill(null)'})
 
 def printprice(curr):
